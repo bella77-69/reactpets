@@ -43,8 +43,6 @@ const breeds = [];
                   }
                 </select>
                 </label>
-
-                {/* Breed */}
                 <label htmlFor="breed">
                 Breed
                 <select 
