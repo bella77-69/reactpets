@@ -6,7 +6,7 @@ import Pet from "./Pet"
 const ANIMALS = ["bird", "cat", "dog", "rabbit", "reptile"];
 
 const SearchParams = () => {
-const [location, setLocation] = useState("Manchester");
+const [location, setLocation] = useState("");
 const [animal, setAnimal] = useState("");
 const [breed, setBreed] = useState("");
 const [pets, setPets] = useState([]);
@@ -14,12 +14,17 @@ const breeds = [];
 
 useEffect(() => {
   requestPets();
-})
+  }, []); 
+  // [] Limits the render to only once/call the effect once 
 
 async function requestPets() {
   const res = await fetch(
     `http://pets-v2.dev-apis.com/pets?animal=${animal}&location=${location}&breed=${breed}`
-  )
+  );
+
+  const json = await res.json();
+
+  setPets(json.pets);
 }
 
 
@@ -80,6 +85,17 @@ async function requestPets() {
 
               <button>Submit</button>
           </form>
+
+          {
+            pets.map(pet => (
+              <Pet 
+              name={pet.name} 
+              animal={pet.animal} 
+              breed={pet.breed} 
+              key={pet.id}
+              />
+            ))
+          }
         </div>
     )
 }
