@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import useBreedList from './useBreedList';
-import Pet from "./Pet";
+import Results from './Results';
 
 
 
@@ -31,7 +31,12 @@ async function requestPets() {
 
     return (
         <div className="search-params">
-          <form>
+          <form
+            onSubmit = {(e) => {
+              e.preventDefault();
+              requestPets();
+            }}
+          >
             
             {/* Location */}
               <label htmlFor="location">
@@ -88,17 +93,7 @@ async function requestPets() {
 
               <button>Submit</button>
           </form>
-
-          {
-            pets.map(pet => (
-              <Pet 
-              name={pet.name} 
-              animal={pet.animal} 
-              breed={pet.breed} 
-              key={pet.id}
-              />
-            ))
-          }
+          <Results pets={pets} />
         </div>
     )
 }
