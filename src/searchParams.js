@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import Pet from "./Pet"
+import useBreedList from './useBreedList';
+import Pet from "./Pet";
 
 
 
@@ -10,11 +11,11 @@ const [location, setLocation] = useState("");
 const [animal, setAnimal] = useState("");
 const [breed, setBreed] = useState("");
 const [pets, setPets] = useState([]);
-const breeds = [];
+const [breeds] = useBreedList(animal);
 
 useEffect(() => {
   requestPets();
-  }, []); 
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
   // [] Limits the render to only once/call the effect once 
 
 async function requestPets() {
@@ -62,6 +63,8 @@ async function requestPets() {
                     ))
                   }
                 </select>
+
+                {/* Breeds  */}
                 </label>
                 <label htmlFor="breed">
                 Breed
