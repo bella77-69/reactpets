@@ -1,12 +1,13 @@
-import { StrictMode, useState } from "react";
+import { useState, StrictMode } from "react";
 import { render } from "react-dom";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
-import SearchParams from './SearchParams';
-import Details from './Details';
-import ThemeContext from './ThemeContext';
+import Details from "./Details";
+import SearchParams from "./SearchParams";
+import ThemeContext from "./ThemeContext";
 
 const App = () => {
   const theme = useState("darkblue");
+  
   return (
     <ThemeContext.Provider value={theme}>
       <div>
@@ -25,11 +26,12 @@ const App = () => {
         </Router>
       </div>
     </ThemeContext.Provider>
-    );
-  };
+  );
+};
 
-render(<StrictMode>
-        <App />
-        </StrictMode>,
-         document.getElementById("root")
-      );
+render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+  document.getElementById("root")
+);
