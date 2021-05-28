@@ -1,8 +1,8 @@
 import { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 class ErrorBoundary extends Component { 
-    state = { hasError: false };
+    state = { hasError: false, redirect: false };
     static getDerivedStateFromError(e) {
         return { hasError: true }
     }
@@ -11,13 +11,20 @@ class ErrorBoundary extends Component {
         console.error("ErrorBoundary caught an error", error, info);
     }
 
+    componentDidUpdate () {
+        if(this.state.hasError) {
+            setTimeout(() => this.setState({ redirect: true}), 5000)
+        }
+    }
     render () {
-        if (this.state.hasError) {
+        if (this.state.redirect) {
+            return <Redirect to="/" />
+        } else if (this.state.hasError)  {
             return (
-                <h1>
+                <h2>
                     This listing has an error. 
-                    <Link to="/">Click here</Link> to go back to the home page. 
-                </h1>
+                    <Link to="/">Click here</Link> to go back to the home page or wait five seconds.
+                </h2>
             )
         }
         return this.props.children;
